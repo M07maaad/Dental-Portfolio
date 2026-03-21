@@ -270,6 +270,29 @@ section{padding:6rem 0}
 .empty-gallery{text-align:center;padding:3rem;color:var(--warm-gray);font-size:.85rem}
 .empty-gallery svg{width:40px;height:40px;stroke:var(--gold-light);fill:none;margin:0 auto 1rem;display:block}
 
+/* ── PASSWORD MODAL ── */
+.pw-overlay{position:fixed;inset:0;background:rgba(18,46,46,.97);z-index:700;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(12px)}
+.pw-overlay.open{opacity:1;pointer-events:all}
+.pw-box{background:var(--ivory);border-radius:12px;width:92%;max-width:380px;padding:2.5rem;text-align:center;position:relative}
+.pw-icon{width:52px;height:52px;border-radius:50%;background:var(--gold-dim);border:1px solid rgba(200,168,107,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem}
+.pw-icon svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.8}
+.pw-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--teal-dark);margin-bottom:.4rem}
+.pw-sub{font-size:.78rem;color:var(--warm-gray);margin-bottom:1.8rem;line-height:1.6}
+.pw-input-wrap{position:relative;margin-bottom:1rem}
+.pw-input{width:100%;padding:.8rem 3rem .8rem 1rem;border:1px solid var(--line);border-radius:6px;font-size:.95rem;font-family:'DM Sans',sans-serif;color:var(--charcoal);outline:none;transition:border-color .2s;letter-spacing:.1em;text-align:center}
+.pw-input:focus{border-color:var(--teal)}
+.pw-input.error{border-color:#c0392b;animation:shake .35s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.pw-toggle{position:absolute;right:.8rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--warm-gray);padding:.2rem;transition:color .2s}
+.pw-toggle:hover{color:var(--teal)}
+.pw-toggle svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
+.pw-err{font-size:.73rem;color:#c0392b;margin-bottom:.8rem;min-height:1rem}
+.pw-btn{width:100%;padding:.9rem;background:var(--teal);color:white;border:none;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:all .25s}
+.pw-btn:hover{background:var(--teal-dark)}
+.pw-cancel{margin-top:.9rem;font-size:.72rem;color:var(--warm-gray);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;transition:color .2s;width:100%}
+.pw-cancel:hover{color:var(--teal)}
+
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--ivory)}
@@ -513,7 +536,7 @@ section{padding:6rem 0}
         <p class="section-tag">Full Gallery</p>
         <h2 class="section-title">Case Photo Album</h2>
       </div>
-      <button class="btn-manage" onclick="openAdmin()">
+      <button class="btn-manage" onclick="openAdminBtn()">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
         Manage Cases
       </button>
@@ -558,6 +581,24 @@ section{padding:6rem 0}
       <div class="lb-rule"></div>
       <div class="lb-desc-text" id="lb-desc"></div>
     </div>
+  </div>
+</div>
+
+<!-- PASSWORD MODAL -->
+<div class="pw-overlay" id="pwOverlay">
+  <div class="pw-box">
+    <div class="pw-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+    <div class="pw-title">Admin Access</div>
+    <p class="pw-sub">Enter the password to manage your cases.</p>
+    <div class="pw-input-wrap">
+      <input class="pw-input" type="password" id="pw-input" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkPassword()"/>
+      <button class="pw-toggle" id="pw-toggle" onclick="togglePwVisibility()" type="button">
+        <svg id="pw-eye-icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <div class="pw-err" id="pw-err"></div>
+    <button class="pw-btn" onclick="checkPassword()">Unlock</button>
+    <button class="pw-cancel" onclick="closePwModal()">Cancel</button>
   </div>
 </div>
 
@@ -618,14 +659,64 @@ section{padding:6rem 0}
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // ═══════════════════════════════════════
-// DATA — stored in localStorage
+// SUPABASE
 // ═══════════════════════════════════════
-let cases = [];
-try { cases = JSON.parse(localStorage.getItem('menna_cases') || '[]'); } catch(e){ cases=[]; }
+const SUPABASE_URL  = 'https://nwjyadyoxpxvlwlubljj.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53anlhZHlveHB4dmx3bHVibGpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwOTU0MTYsImV4cCI6MjA4OTY3MTQxNn0.hDa3VUAGhURSqw5-ocrS96T4e7X0JwA7UvTPNQggbEE';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-function saveCases(){ try{ localStorage.setItem('menna_cases', JSON.stringify(cases)); }catch(e){} }
+let cases = [];
+
+async function loadCases(){
+  showLoading(true);
+  const { data, error } = await sb.from('cases').select('*').order('created_at', { ascending: true });
+  showLoading(false);
+  if(error){ console.error('Load error:', error); return; }
+  cases = (data || []).map(r => ({
+    id:    r.id,
+    img:   r.image_url,
+    cat:   r.category,
+    title: r.title,
+    desc:  r.description || '',
+    ba:    r.ba_label    || '',
+  }));
+  renderGallery();
+  renderCarousel();
+  startAuto();
+}
+
+async function uploadImage(file){
+  const ext  = file.name.split('.').pop();
+  const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const { error } = await sb.storage.from('case-images').upload(path, file, { upsert: false });
+  if(error) throw error;
+  const { data } = sb.storage.from('case-images').getPublicUrl(path);
+  return { url: data.publicUrl, path };
+}
+
+async function saveCase(caseObj, file){
+  const { url, path } = await uploadImage(file);
+  const { data, error } = await sb.from('cases').insert({
+    title:       caseObj.title,
+    category:    caseObj.cat,
+    description: caseObj.desc,
+    ba_label:    caseObj.ba  || null,
+    image_url:   url,
+  }).select().single();
+  if(error){ await sb.storage.from('case-images').remove([path]); throw error; }
+  return { ...caseObj, id: data.id, img: url };
+}
+
+async function removeCase(id, imgUrl){
+  await sb.from('cases').delete().eq('id', id);
+  try {
+    const path = imgUrl.split('/case-images/')[1];
+    if(path) await sb.storage.from('case-images').remove([path]);
+  } catch(e){ console.warn('Image delete:', e); }
+}
 
 // ═══════════════════════════════════════
 // HERO PHOTO
@@ -755,9 +846,54 @@ document.getElementById('lightbox').addEventListener('click', e => { if(e.target
 document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeLightbox(); closeAdmin(); } });
 
 // ═══════════════════════════════════════
+// PASSWORD
+// ═══════════════════════════════════════
+const ADMIN_PASSWORD = 'Menna2025';
+let pwUnlocked = false;
+
+function openAdminBtn(){
+  if(pwUnlocked){ openAdmin(); return; }
+  document.getElementById('pw-input').value='';
+  document.getElementById('pw-err').textContent='';
+  document.getElementById('pwOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(() => document.getElementById('pw-input').focus(), 200);
+}
+function closePwModal(){
+  document.getElementById('pwOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function checkPassword(){
+  const val = document.getElementById('pw-input').value;
+  if(val === ADMIN_PASSWORD){
+    pwUnlocked = true;
+    closePwModal();
+    openAdmin();
+  } else {
+    const inp = document.getElementById('pw-input');
+    const err = document.getElementById('pw-err');
+    inp.classList.add('error');
+    err.textContent = 'Incorrect password. Please try again.';
+    inp.value='';
+    setTimeout(() => inp.classList.remove('error'), 400);
+  }
+}
+function togglePwVisibility(){
+  const inp = document.getElementById('pw-input');
+  const icon = document.getElementById('pw-eye-icon');
+  if(inp.type === 'password'){
+    inp.type = 'text';
+    icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>';
+  } else {
+    inp.type = 'password';
+    icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+  }
+}
+
+// ═══════════════════════════════════════
 // ADMIN PANEL
 // ═══════════════════════════════════════
-let pendingImg = null;
+let pendingFile = null;
 
 function openAdmin(){
   document.getElementById('adminOverlay').classList.add('open');
@@ -772,11 +908,11 @@ document.getElementById('adminOverlay').addEventListener('click', e => { if(e.ta
 
 function previewImage(input){
   const file = input.files[0]; if(!file) return;
+  pendingFile = file;
   const r = new FileReader();
   r.onload = ev => {
-    pendingImg = ev.target.result;
     const prev = document.getElementById('img-preview');
-    prev.src = pendingImg;
+    prev.src = ev.target.result;
     prev.style.display = 'block';
     document.querySelector('.img-upload-box svg').style.display = 'none';
     document.querySelector('.img-upload-box p').style.display = 'none';
@@ -784,37 +920,52 @@ function previewImage(input){
   r.readAsDataURL(file);
 }
 
-function addCase(){
+async function addCase(){
   const title = document.getElementById('case-title').value.trim();
   const cat   = document.getElementById('case-cat').value;
   const desc  = document.getElementById('case-desc').value.trim();
   const ba    = document.getElementById('case-ba').value;
   if(!title){ alert('Please add a case title.'); return; }
-  if(!pendingImg){ alert('Please choose a photo.'); return; }
-  cases.push({ img: pendingImg, cat, title, desc, ba });
-  saveCases();
-  renderGallery();
-  renderCarousel();
-  startAuto();
-  // reset form
-  document.getElementById('case-title').value='';
-  document.getElementById('case-desc').value='';
-  document.getElementById('case-ba').value='';
-  document.getElementById('case-file-input').value='';
-  document.getElementById('img-preview').style.display='none';
-  document.querySelector('.img-upload-box svg').style.display='block';
-  document.querySelector('.img-upload-box p').style.display='block';
-  pendingImg = null;
-  renderAdminList();
+  if(!pendingFile){ alert('Please choose a photo.'); return; }
+  const addBtn = document.querySelector('.btn-add');
+  addBtn.textContent = 'Uploading...';
+  addBtn.disabled = true;
+  try {
+    const newCase = await saveCase({ cat, title, desc, ba }, pendingFile);
+    cases.push(newCase);
+    renderGallery();
+    renderCarousel();
+    startAuto();
+    renderAdminList();
+    // reset form
+    document.getElementById('case-title').value='';
+    document.getElementById('case-desc').value='';
+    document.getElementById('case-ba').value='';
+    document.getElementById('case-file-input').value='';
+    document.getElementById('img-preview').style.display='none';
+    document.querySelector('.img-upload-box svg').style.display='block';
+    document.querySelector('.img-upload-box p').style.display='block';
+    pendingFile = null;
+  } catch(e){
+    alert('Upload failed: ' + e.message);
+  } finally {
+    addBtn.textContent = '+ Add Case';
+    addBtn.disabled = false;
+  }
 }
 
-function deleteCase(i){
+async function deleteCase(i){
   if(!confirm('Delete this case?')) return;
-  cases.splice(i,1);
-  saveCases();
-  renderGallery();
-  renderCarousel();
-  renderAdminList();
+  const c = cases[i];
+  try {
+    await removeCase(c.id, c.img);
+    cases.splice(i,1);
+    renderGallery();
+    renderCarousel();
+    renderAdminList();
+  } catch(e){
+    alert('Delete failed: ' + e.message);
+  }
 }
 
 function renderAdminList(){
@@ -834,11 +985,19 @@ function renderAdminList(){
 }
 
 // ═══════════════════════════════════════
+// LOADING STATE
+// ═══════════════════════════════════════
+function showLoading(show){
+  const grid = document.getElementById('album-grid');
+  if(show){
+    grid.innerHTML = `<div class="empty-gallery" style="grid-column:1/-1"><svg viewBox="0 0 24 24" style="animation:spin 1s linear infinite"><circle cx="12" cy="12" r="10" stroke-dasharray="40 20"/></svg><p>Loading cases...</p></div>`;
+  }
+}
+
+// ═══════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════
-renderGallery();
-renderCarousel();
-startAuto();
+loadCases();
 </script>
 </body>
 </html>
