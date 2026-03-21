@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dr. Menna Hammad — Dental Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --ivory: #f8f4ee;
+  --ivory-2: #f0e9dd;
+  --gold: #c8a86b;
+  --gold-light: #e0c898;
+  --gold-dim: rgba(200,168,107,0.18);
+  --teal: #2b6464;
+  --teal-mid: #3d7e7e;
+  --teal-dark: #1c4444;
+  --teal-xdark: #122e2e;
+  --charcoal: #282828;
+  --warm-gray: #7a7065;
+  --light-line: rgba(200,168,107,0.22);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'DM Sans',sans-serif;background:var(--ivory);color:var(--charcoal);overflow-x:hidden}
+
+/* grain */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 4rem;background:rgba(248,244,238,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--light-line);transition:all .3s}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:500;color:var(--teal-dark);letter-spacing:.05em}
+.nav-brand span{color:var(--gold)}
+.nav-links{display:flex;gap:2.2rem;list-style:none}
+.nav-links a{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--warm-gray);text-decoration:none;transition:color .25s;font-weight:400}
+.nav-links a:hover{color:var(--teal)}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:grid;grid-template-columns:42% 58%;position:relative;overflow:hidden;padding-top:64px}
+
+/* left panel */
+.hero-left{background:var(--teal-xdark);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:5rem 3.5rem 5rem;position:relative;overflow:hidden}
+.hero-left::before{content:'';position:absolute;width:420px;height:420px;background:radial-gradient(circle,rgba(200,168,107,.13) 0%,transparent 70%);top:-80px;left:-80px;border-radius:50%}
+.hero-left::after{content:'';position:absolute;bottom:0;left:0;right:0;height:160px;background:linear-gradient(to top,rgba(200,168,107,.07),transparent)}
+
+/* decorative arch */
+.hero-arch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:260px;height:130px;border:1px solid rgba(200,168,107,.18);border-top-left-radius:130px;border-top-right-radius:130px;border-bottom:none}
+
+/* photo */
+.photo-wrap{position:relative;width:280px;height:360px;z-index:2;animation:fadeUp .9s ease both}
+.photo-wrap::before{content:'';position:absolute;top:-10px;left:-10px;right:10px;bottom:-10px;border:1px solid rgba(200,168,107,.35);border-radius:4px;z-index:-1;transition:all .4s}
+.photo-wrap:hover::before{top:-16px;left:-16px;right:16px;bottom:-16px;border-color:rgba(200,168,107,.65)}
+.photo-wrap img,.photo-ph{width:100%;height:100%;object-fit:cover;border-radius:3px;display:block}
+.photo-ph{background:linear-gradient(160deg,var(--teal-mid),var(--teal-dark));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.9rem}
+.photo-ph .icon{width:72px;height:72px;border-radius:50%;background:rgba(200,168,107,.15);border:1.5px solid rgba(200,168,107,.35);display:flex;align-items:center;justify-content:center}
+.photo-ph .icon svg{width:32px;height:32px}
+.photo-ph p{color:rgba(200,168,107,.55);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase}
+
+/* badge */
+.badge{position:absolute;bottom:-18px;right:-24px;background:var(--gold);color:var(--teal-xdark);padding:.8rem 1.2rem;border-radius:3px;font-size:.65rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;box-shadow:0 8px 28px rgba(200,168,107,.45);animation:fadeUp .9s .25s ease both;line-height:1.1}
+.badge strong{display:block;font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;letter-spacing:0;margin-bottom:.1rem}
+
+/* hero right */
+.hero-right{background:var(--ivory);display:flex;flex-direction:column;justify-content:center;padding:5rem 5rem 5rem 5.5rem;position:relative}
+.hero-right::before{content:'';position:absolute;top:20%;right:0;width:320px;height:320px;background:radial-gradient(circle,rgba(43,100,100,.06) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+
+.eyebrow{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:400;margin-bottom:1.2rem;animation:fadeUp .8s .1s ease both;opacity:0;animation-fill-mode:forwards}
+.hero-name{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,5vw,4.4rem);font-weight:400;line-height:1.05;color:var(--teal-dark);margin-bottom:.3rem;animation:fadeUp .8s .2s ease both;opacity:0;animation-fill-mode:forwards}
+.hero-name em{font-style:italic;color:var(--teal-mid)}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;color:var(--warm-gray);margin-bottom:2.4rem;letter-spacing:.04em;font-style:italic;animation:fadeUp .8s .3s ease both;opacity:0;animation-fill-mode:forwards}
+
+.divider{width:48px;height:1.5px;background:linear-gradient(to right,var(--gold),transparent);margin-bottom:2rem;animation:expandW .8s .4s ease both;animation-fill-mode:forwards;transform-origin:left}
+@keyframes expandW{from{width:0;opacity:0}to{width:48px;opacity:1}}
+
+.summary{font-size:.92rem;line-height:1.85;color:#4a4540;max-width:480px;margin-bottom:2.8rem;animation:fadeUp .8s .45s ease both;opacity:0;animation-fill-mode:forwards}
+
+.stats-row{display:flex;gap:2.5rem;margin-bottom:3rem;animation:fadeUp .8s .5s ease both;opacity:0;animation-fill-mode:forwards}
+.stat{text-align:left}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:500;color:var(--teal);line-height:1}
+.stat-label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-gray);margin-top:.2rem}
+
+.hero-cta{display:flex;gap:1rem;animation:fadeUp .8s .6s ease both;opacity:0;animation-fill-mode:forwards}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.8rem;border-radius:2px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;font-weight:500;transition:all .3s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif}
+.btn-primary{background:var(--teal);color:#fff}
+.btn-primary:hover{background:var(--teal-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(43,100,100,.3)}
+.btn-outline{background:transparent;color:var(--teal);border:1px solid var(--teal);font-family:'DM Sans',sans-serif}
+.btn-outline:hover{background:var(--teal);color:#fff;transform:translateY(-2px)}
+
+/* contact strip in hero */
+.contact-strip{position:absolute;bottom:2.5rem;left:5.5rem;display:flex;gap:2rem;animation:fadeUp .8s .7s ease both;opacity:0;animation-fill-mode:forwards}
+.contact-item{display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--warm-gray);letter-spacing:.04em}
+.contact-item svg{width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:1.8}
+
+/* ── SECTION COMMON ── */
+section{padding:7rem 0}
+.container{max-width:1180px;margin:0 auto;padding:0 4rem}
+.section-tag{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:400;color:var(--teal-dark);line-height:1.1;margin-bottom:1.2rem}
+.section-sub{font-size:.9rem;color:var(--warm-gray);line-height:1.7;max-width:520px}
+
+/* ── SKILLS ── */
+.skills-section{background:var(--teal-xdark);position:relative;overflow:hidden}
+.skills-section::before{content:'';position:absolute;right:-120px;top:-120px;width:480px;height:480px;background:radial-gradient(circle,rgba(200,168,107,.08) 0%,transparent 70%);border-radius:50%}
+.skills-section .section-tag{color:var(--gold)}
+.skills-section .section-title{color:var(--ivory)}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;margin-top:3.5rem;background:rgba(200,168,107,.12)}
+.skill-card{background:var(--teal-xdark);padding:2.5rem 2rem;position:relative;overflow:hidden;transition:all .35s}
+.skill-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.skill-card:hover{background:rgba(43,100,100,.5)}
+.skill-card:hover::before{transform:scaleX(1)}
+.skill-icon{width:44px;height:44px;background:var(--gold-dim);border:1px solid rgba(200,168,107,.25);border-radius:3px;display:flex;align-items:center;justify-content:center;margin-bottom:1.4rem}
+.skill-icon svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.skill-name{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:500;color:var(--ivory);margin-bottom:.6rem}
+.skill-desc{font-size:.8rem;color:rgba(240,233,221,.55);line-height:1.7}
+
+/* ── CASES GALLERY ── */
+.gallery-section{background:var(--ivory-2);position:relative;overflow:hidden}
+.gallery-section::before{content:'';position:absolute;left:-100px;bottom:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(43,100,100,.06) 0%,transparent 70%);border-radius:50%}
+
+.gallery-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem}
+.gallery-controls{display:flex;gap:.8rem}
+.gal-btn{width:44px;height:44px;border-radius:50%;border:1px solid var(--light-line);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--teal);transition:all .25s}
+.gal-btn:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
+.gal-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+
+/* rotating carousel */
+.carousel-wrap{position:relative;overflow:hidden}
+.carousel-track{display:flex;gap:1.6rem;transition:transform .6s cubic-bezier(.25,.46,.45,.94)}
+.case-card{min-width:320px;background:var(--ivory);border-radius:3px;overflow:hidden;box-shadow:0 2px 20px rgba(40,40,40,.06);transition:all .4s;cursor:pointer;flex-shrink:0;border:1px solid rgba(200,168,107,.12)}
+.case-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(43,100,100,.15)}
+.case-img{width:100%;height:240px;object-fit:cover;display:block;background:linear-gradient(145deg,var(--teal-mid),var(--teal-dark));position:relative}
+.case-img-ph{width:100%;height:240px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.case-img-ph::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(28,68,68,.7))}
+
+.before-after{position:absolute;inset:0;display:flex}
+.ba-half{flex:1;display:flex;align-items:center;justify-content:center;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+.ba-before{background:rgba(28,68,68,.6);color:rgba(200,168,107,.7);border-right:1px solid rgba(200,168,107,.3)}
+.ba-after{background:rgba(43,100,100,.5);color:var(--gold-light)}
+.ba-icon{display:block;font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:400;margin-bottom:.3rem;line-height:1}
+
+.case-body{padding:1.6rem}
+.case-tag{font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.case-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:500;color:var(--teal-dark);margin-bottom:.5rem}
+.case-desc{font-size:.8rem;color:var(--warm-gray);line-height:1.7}
+
+.carousel-dots{display:flex;justify-content:center;gap:.6rem;margin-top:2rem}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--gold-light);opacity:.35;transition:all .3s;cursor:pointer}
+.dot.active{opacity:1;width:20px;border-radius:3px;background:var(--teal)}
+
+/* ── TIMELINE / EXPERIENCE ── */
+.exp-section{background:var(--ivory);position:relative}
+.exp-grid{display:grid;grid-template-columns:1fr 2px 1fr;gap:0 3rem;margin-top:4rem;position:relative}
+.timeline-line{background:linear-gradient(to bottom,transparent,var(--gold) 15%,var(--gold) 85%,transparent);position:relative}
+.timeline-dot{width:10px;height:10px;background:var(--gold);border-radius:50%;position:absolute;left:50%;transform:translateX(-50%);border:2px solid var(--ivory)}
+.exp-item{padding:0 0 3rem;position:relative}
+.exp-item.right{text-align:left}
+.exp-item.left{text-align:right}
+.exp-year{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.exp-role{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;color:var(--teal-dark);margin-bottom:.3rem}
+.exp-place{font-size:.8rem;color:var(--teal-mid);margin-bottom:.7rem;font-style:italic}
+.exp-bullets{font-size:.8rem;color:var(--warm-gray);line-height:1.8;list-style:none}
+.exp-bullets li{position:relative;padding-left:1rem}
+.exp-bullets li::before{content:'—';position:absolute;left:0;color:var(--gold-light)}
+.exp-item.left .exp-bullets li{padding-left:0;padding-right:1rem}
+.exp-item.left .exp-bullets li::before{left:auto;right:0}
+
+/* ── LANGUAGES & CERTS ── */
+.extras-section{background:var(--teal-dark);position:relative;overflow:hidden}
+.extras-section::before{content:'';position:absolute;right:-80px;bottom:-80px;width:360px;height:360px;background:radial-gradient(circle,rgba(200,168,107,.1) 0%,transparent 70%);border-radius:50%}
+.extras-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;margin-top:4rem}
+.lang-list{display:flex;flex-direction:column;gap:1.4rem}
+.lang-item{}
+.lang-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+.lang-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--ivory);font-weight:400}
+.lang-level{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.lang-bar{height:2px;background:rgba(200,168,107,.15);border-radius:1px;overflow:hidden}
+.lang-fill{height:100%;background:linear-gradient(to right,var(--gold),var(--gold-light));border-radius:1px;transition:width 1s ease}
+
+.cert-list{display:flex;flex-direction:column;gap:1rem}
+.cert-item{display:flex;align-items:flex-start;gap:1rem;padding:1.2rem 1.4rem;background:rgba(200,168,107,.06);border:1px solid rgba(200,168,107,.12);border-radius:3px;transition:all .3s}
+.cert-item:hover{background:rgba(200,168,107,.1);transform:translateX(4px)}
+.cert-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;margin-top:.45rem;flex-shrink:0}
+.cert-text{font-size:.82rem;color:rgba(240,233,221,.7);line-height:1.6}
+
+/* ── PHOTO ALBUM ── */
+.album-section{background:var(--ivory-2);position:relative}
+.album-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:4rem}
+.album-item{position:relative;overflow:hidden;border-radius:3px;cursor:pointer;group:true;border:1px solid rgba(200,168,107,.14)}
+.album-item:nth-child(4n){grid-column:span 2}
+.album-ph{aspect-ratio:4/3;background:linear-gradient(145deg,var(--teal-mid),var(--teal-xdark));display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:transform .5s}
+.album-item:nth-child(4n) .album-ph{aspect-ratio:16/7}
+.album-item:hover .album-ph{transform:scale(1.04)}
+.album-ph::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(28,44,44,.85) 0%,rgba(28,44,44,.1) 50%,transparent 100%);transition:opacity .3s}
+.album-item:hover .album-ph::after{opacity:.7}
+.album-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.4rem;z-index:2}
+.album-tag{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem;transition:transform .3s}
+.album-item:hover .album-tag{transform:translateY(-2px)}
+.album-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--ivory);font-weight:400;line-height:1.2;transition:transform .3s}
+.album-item:hover .album-title{transform:translateY(-2px)}
+.album-desc{font-size:.72rem;color:rgba(240,233,221,.65);margin-top:.35rem;line-height:1.5;max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .4s}
+.album-item:hover .album-desc{max-height:60px;opacity:1}
+.album-num{position:absolute;top:1rem;right:1rem;font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:rgba(200,168,107,.25);line-height:1;z-index:2}
+/* decorative shapes inside album placeholders */
+.ph-tooth{opacity:.15}
+
+/* ── CONTACT / FOOTER ── */
+.footer-section{background:var(--teal-xdark);padding:5rem 0;position:relative;overflow:hidden}
+.footer-section::before{content:'';position:absolute;left:50%;transform:translateX(-50%);top:-1px;width:1px;height:80px;background:linear-gradient(to bottom,var(--gold),transparent)}
+.footer-inner{text-align:center}
+.footer-eyebrow{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.footer-name{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:300;color:var(--ivory);margin-bottom:.5rem}
+.footer-sub{font-size:.9rem;color:rgba(240,233,221,.5);margin-bottom:3rem;font-style:italic}
+.contact-grid{display:inline-flex;gap:3rem;margin-bottom:3.5rem}
+.contact-link{display:flex;flex-direction:column;align-items:center;gap:.6rem;color:rgba(240,233,221,.55);font-size:.75rem;letter-spacing:.08em;text-decoration:none;transition:color .3s}
+.contact-link:hover{color:var(--gold)}
+.contact-link .ci{width:44px;height:44px;border:1px solid rgba(200,168,107,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.contact-link:hover .ci{border-color:var(--gold);background:var(--gold-dim)}
+.contact-link svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6}
+.footer-line{width:60px;height:1px;background:rgba(200,168,107,.2);margin:0 auto 1.5rem}
+.footer-copy{font-size:.68rem;letter-spacing:.08em;color:rgba(240,233,221,.25)}
+
+/* ── LIGHTBOX ── */
+.lightbox{position:fixed;inset:0;background:rgba(18,46,46,.96);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(8px)}
+.lightbox.open{opacity:1;pointer-events:all}
+.lb-inner{max-width:900px;width:90%;text-align:center;animation:fadeUp .4s ease}
+.lb-img-ph{width:100%;height:480px;background:linear-gradient(145deg,var(--teal-mid),var(--teal-dark));border-radius:3px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem}
+.lb-img-ph p{color:rgba(200,168,107,.4);font-size:.8rem;letter-spacing:.1em}
+.lb-title{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--ivory);margin-bottom:.4rem}
+.lb-desc{font-size:.85rem;color:rgba(240,233,221,.6);line-height:1.7}
+.lb-close{position:absolute;top:2rem;right:2.5rem;background:none;border:none;color:rgba(240,233,221,.5);font-size:2rem;cursor:pointer;transition:color .2s;line-height:1}
+.lb-close:hover{color:var(--gold)}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--ivory)}
+::-webkit-scrollbar-thumb{background:var(--gold-light);border-radius:3px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left{padding:7rem 2rem 4rem;min-height:50vh}
+  .hero-right{padding:3.5rem 2rem 4rem}
+  .skills-grid{grid-template-columns:1fr 1fr}
+  .exp-grid{grid-template-columns:1fr;gap:0}
+  .timeline-line{display:none}
+  .extras-grid{grid-template-columns:1fr;gap:3rem}
+  .album-grid{grid-template-columns:1fr 1fr}
+  .album-item:nth-child(4n){grid-column:span 1}
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .container{padding:0 1.5rem}
+  section{padding:5rem 0}
+  .contact-strip{left:2rem;flex-wrap:wrap;gap:1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Dr. <span>Menna</span> Hammad</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Expertise</a></li>
+    <li><a href="#cases">Cases</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#album">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <!-- LEFT: photo panel -->
+  <div class="hero-left">
+    <div class="hero-arch"></div>
+    <div class="photo-wrap" id="photo-wrap">
+      <!-- Replace src below with actual photo path, e.g. src="photo.jpg" -->
+      <div class="photo-ph" id="photo-ph">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(200,168,107,0.7)" stroke-width="1.5">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <p>Add Your Photo</p>
+      </div>
+    </div>
+    <div class="badge">
+      <strong>2025</strong>
+      Graduate · BSMU Russia
+    </div>
+  </div>
+
+  <!-- RIGHT: info -->
+  <div class="hero-right">
+    <p class="eyebrow">General Dentist · Oral &amp; Dental Medicine and Surgery</p>
+    <h1 class="hero-name">Dr. <em>Menna</em><br>Hammad</h1>
+    <p class="hero-title">BDS · Bashkir State Medical University, Russia</p>
+    <div class="divider"></div>
+    <p class="summary">
+      A clinical-ready dentist with over 2 years of hands-on experience in international dental settings. Proficient in Conservative Dentistry and Oral Prophylaxis, with bilingual fluency in English and Russian (C1), and a proven ability to deliver patient-centered care across diverse healthcare systems.
+    </p>
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Years Clinical Exp.</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Languages</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">C1</div>
+        <div class="stat-label">English & Russian</div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#cases" class="btn btn-primary">View Cases →</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+
+    <div class="contact-strip">
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.38 19a19.45 19.45 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        +201200410193
+      </div>
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        mennahammad.ali@gmail.com
+      </div>
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Egypt
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div class="container">
+    <p class="section-tag reveal">Core Competencies</p>
+    <h2 class="section-title reveal" style="color:var(--ivory)">Clinical Expertise</h2>
+    <div class="skills-grid reveal">
+
+      <div class="skill-card">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="skill-name">Operative Dentistry</div>
+        <div class="skill-desc">Complex composite restorations, aesthetic fillings, and cavity management with precision and aesthetic sensitivity.</div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <div class="skill-name">Patient Management</div>
+        <div class="skill-desc">Cross-cultural communication across Arabic, English, and Russian. Strong patient psychology skills with a calm, empathetic approach.</div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="skill-name">Oral Prophylaxis</div>
+        <div class="skill-desc">Professional scaling & polishing, oral hygiene education, and preventive care protocols to international standards.</div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <div class="skill-name">Dental Radiology</div>
+        <div class="skill-desc">X-ray technique, digital imaging, and radiographic interpretation for accurate diagnosis and treatment planning.</div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div class="skill-name">Chairside Assistance</div>
+        <div class="skill-desc">Endodontics, Prosthodontics, Oral Surgery and Orthodontics support. Efficient clinical records and seamless patient flow management.</div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <div class="skill-name">Infection Control</div>
+        <div class="skill-desc">Adherence to international sterilization and safety protocols across dual healthcare systems (Russia & Egypt).</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CASES GALLERY -->
+<section class="gallery-section" id="cases">
+  <div class="container">
+    <div class="gallery-header reveal">
+      <div>
+        <p class="section-tag">Clinical Work</p>
+        <h2 class="section-title">Featured Cases</h2>
+        <p class="section-sub">A rotating showcase of clinical cases — add your before/after photos and case notes here.</p>
+      </div>
+      <div class="gallery-controls">
+        <button class="gal-btn" id="prev-btn">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="gal-btn" id="next-btn">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="carousel-wrap reveal">
+      <div class="carousel-track" id="carousel">
+
+        <div class="case-card" onclick="openLightbox('Composite Restoration','Composite Restoration · Case 01','Full anterior composite restoration achieving natural translucency and optimal shade matching. Patient presented with worn incisors requiring full aesthetic rehabilitation.')">
+          <div class="case-img-ph">
+            <div class="before-after">
+              <div class="ba-half ba-before"><span><em class="ba-icon">B</em>Before</span></div>
+              <div class="ba-half ba-after"><span><em class="ba-icon">A</em>After</span></div>
+            </div>
+          </div>
+          <div class="case-body">
+            <div class="case-tag">Operative Dentistry</div>
+            <div class="case-title">Anterior Composite Restoration</div>
+            <div class="case-desc">Full aesthetic rehabilitation with layered composite — achieving natural translucency and perfect shade match.</div>
+          </div>
+        </div>
+
+        <div class="case-card" onclick="openLightbox('Scaling & Polishing','Scaling & Polishing · Case 02','Complete supragingival and subgingival debridement followed by professional polishing. Patient presented with heavy calculus deposits and early periodontitis signs.')">
+          <div class="case-img-ph">
+            <div class="before-after">
+              <div class="ba-half ba-before"><span><em class="ba-icon">B</em>Before</span></div>
+              <div class="ba-half ba-after"><span><em class="ba-icon">A</em>After</span></div>
+            </div>
+          </div>
+          <div class="case-body">
+            <div class="case-tag">Oral Prophylaxis</div>
+            <div class="case-title">Full Mouth Scaling & Polishing</div>
+            <div class="case-desc">Complete periodontal prophylaxis with oral hygiene instruction. Significant improvement in gingival health.</div>
+          </div>
+        </div>
+
+        <div class="case-card" onclick="openLightbox('Aesthetic Filling','Aesthetic Filling · Case 03','Class IV composite restoration on upper right central incisor following trauma. Shade-matched and contoured to mirror the contralateral tooth perfectly.')">
+          <div class="case-img-ph">
+            <div class="before-after">
+              <div class="ba-half ba-before"><span><em class="ba-icon">B</em>Before</span></div>
+              <div class="ba-half ba-after"><span><em class="ba-icon">A</em>After</span></div>
+            </div>
+          </div>
+          <div class="case-body">
+            <div class="case-tag">Aesthetic Dentistry</div>
+            <div class="case-title">Class IV Aesthetic Restoration</div>
+            <div class="case-desc">Post-trauma incisal edge rebuild using nano-hybrid composite. Shade and contour matched to adjacent teeth.</div>
+          </div>
+        </div>
+
+        <div class="case-card" onclick="openLightbox('Treatment Planning','Comprehensive Treatment Plan · Case 04','Multi-disciplinary treatment planning for a complex case involving caries management, periodontal treatment, and aesthetic improvement across the full arch.')">
+          <div class="case-img-ph">
+            <div class="before-after">
+              <div class="ba-half ba-before"><span><em class="ba-icon">B</em>Before</span></div>
+              <div class="ba-half ba-after"><span><em class="ba-icon">A</em>After</span></div>
+            </div>
+          </div>
+          <div class="case-body">
+            <div class="case-tag">Treatment Planning</div>
+            <div class="case-title">Full Arch Rehabilitation Plan</div>
+            <div class="case-desc">Comprehensive multi-phase treatment plan coordinating caries control, periodontal care, and aesthetic outcomes.</div>
+          </div>
+        </div>
+
+        <div class="case-card" onclick="openLightbox('Radiographic Diagnosis','Periapical Radiograph · Case 05','Radiographic assessment and clinical examination leading to accurate diagnosis and individualized treatment planning for a patient with complex multi-tooth pathology.')">
+          <div class="case-img-ph">
+            <div class="before-after">
+              <div class="ba-half ba-before"><span><em class="ba-icon">R</em>X-Ray</span></div>
+              <div class="ba-half ba-after"><span><em class="ba-icon">Dx</em>Diagnosis</span></div>
+            </div>
+          </div>
+          <div class="case-body">
+            <div class="case-tag">Dental Radiology</div>
+            <div class="case-title">Radiographic Diagnosis</div>
+            <div class="case-desc">Comprehensive radiographic and clinical assessment enabling accurate multi-tooth diagnosis and sequenced treatment.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="carousel-dots" id="dots"></div>
+  </div>
+</section>
+
+<!-- EXPERIENCE TIMELINE -->
+<section class="exp-section" id="experience">
+  <div class="container">
+    <p class="section-tag reveal">Career Path</p>
+    <h2 class="section-title reveal">Professional Experience</h2>
+    <div class="exp-grid reveal">
+
+      <div class="exp-item left">
+        <div class="exp-year">2022 – 2023 · Year 3</div>
+        <div class="exp-role">Clinical Observer</div>
+        <div class="exp-place">BSMU University Clinics & Faculty Private Clinics, Russia</div>
+        <ul class="exp-bullets" style="text-align:right">
+          <li>Selected by faculty for early clinical exposure based on exceptional academic performance</li>
+          <li>Observed advanced cases and surgical procedures</li>
+          <li>Mastered specialized dental instrumentation</li>
+        </ul>
+      </div>
+
+      <div class="timeline-line">
+        <div class="timeline-dot" style="top:0"></div>
+        <div class="timeline-dot" style="top:33%"></div>
+        <div class="timeline-dot" style="top:66%"></div>
+      </div>
+
+      <div class="exp-item right" style="margin-top:3rem">
+        <div class="exp-year">Sep 2023 – Sep 2024 · Year 4</div>
+        <div class="exp-role">Clinical Assistant</div>
+        <div class="exp-place">Private Dental Clinic, Russia</div>
+        <ul class="exp-bullets">
+          <li>Chairside assistance across Endodontics, Prosthodontics, Oral Surgery & Orthodontics</li>
+          <li>Developed expertise in dental radiography & digital imaging</li>
+          <li>Managed patient flow and clinical records</li>
+        </ul>
+      </div>
+
+      <div class="exp-item left" style="margin-top:3rem">
+        <div class="exp-year">Oct 2024 – Present · Year 5</div>
+        <div class="exp-role">Junior / Intern Dentist</div>
+        <div class="exp-place">Private Clinic Russia + Tanta University Hospital, Egypt</div>
+        <ul class="exp-bullets" style="text-align:right">
+          <li>Complex composite restorations and aesthetic fillings</li>
+          <li>Professional scaling, polishing & oral hygiene education</li>
+          <li>Treatment planning under senior consultant supervision</li>
+          <li>International sterilization & safety protocol adherence</li>
+        </ul>
+      </div>
+
+      <div style=""></div><!-- spacer -->
+
+      <div class="exp-item right" style="margin-top:3rem">
+        <div class="exp-year">2025</div>
+        <div class="exp-role">BDS Graduate</div>
+        <div class="exp-place">Bashkir State Medical University (BSMU), Russia</div>
+        <ul class="exp-bullets">
+          <li>Oral &amp; Dental Medicine and Surgery — Class of 2025</li>
+          <li>Coursework: Operative Dentistry, Endodontics, Oral Surgery, Radiology, Periodontology</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES & CERTS -->
+<section class="extras-section" id="extras">
+  <div class="container">
+    <div class="extras-grid">
+      <div>
+        <p class="section-tag reveal">Multilingual</p>
+        <h2 class="section-title reveal" style="color:var(--ivory)">Languages</h2>
+        <div class="lang-list reveal" style="margin-top:2.5rem">
+          <div class="lang-item">
+            <div class="lang-top"><span class="lang-name">Arabic</span><span class="lang-level">Native</span></div>
+            <div class="lang-bar"><div class="lang-fill" data-width="100%" style="width:0"></div></div>
+          </div>
+          <div class="lang-item">
+            <div class="lang-top"><span class="lang-name">English</span><span class="lang-level">C1 Advanced</span></div>
+            <div class="lang-bar"><div class="lang-fill" data-width="88%" style="width:0"></div></div>
+          </div>
+          <div class="lang-item">
+            <div class="lang-top"><span class="lang-name">Russian</span><span class="lang-level">C1 Advanced</span></div>
+            <div class="lang-bar"><div class="lang-fill" data-width="85%" style="width:0"></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="section-tag reveal">Professional Development</p>
+        <h2 class="section-title reveal" style="color:var(--ivory)">Certifications &amp; Activity</h2>
+        <div class="cert-list reveal" style="margin-top:2.5rem">
+          <div class="cert-item">
+            <div class="cert-dot"></div>
+            <div class="cert-text">Active participant in dental seminars and workshops at BSMU, Russia</div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-dot"></div>
+            <div class="cert-text">Experience in multicultural medical teams across Russian and Egyptian healthcare systems</div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-dot"></div>
+            <div class="cert-text">Dual clinical system exposure — international private clinic + university hospital</div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-dot"></div>
+            <div class="cert-text">Selected for early clinical readiness by BSMU faculty based on academic performance</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO ALBUM -->
+<section class="album-section" id="album">
+  <div class="container">
+    <p class="section-tag reveal">Full Gallery</p>
+    <h2 class="section-title reveal">Case Photo Album</h2>
+    <p class="section-sub reveal">Add your case photos here — each card shows the procedure type and a brief description.</p>
+    <div class="album-grid reveal">
+
+      <div class="album-item" onclick="openLightbox('Composite Work','Anterior Composite — Full Rehabilitation','Multi-tooth anterior composite restoration. Layered technique used for optimal aesthetics, shade matching done chairside with natural light.')">
+        <div class="album-ph" style="background:linear-gradient(135deg,#2b6464,#1c4444)">
+          <svg class="ph-tooth" width="80" height="80" viewBox="0 0 24 24" fill="white" stroke="none"><path d="M12 2C9 2 7 4 7 7c0 2 1 4 1 6s-1 3-1 5c0 1.5.5 4 2 4 1 0 1.5-2 2-4s1-3 2-3 1.5 1 2 3 1 4 2 4c1.5 0 2-2.5 2-4 0-2-1-3-1-5s1-4 1-6c0-3-2-5-5-5z"/></svg>
+        </div>
+        <div class="album-overlay">
+          <div class="album-tag">Operative · Case 01</div>
+          <div class="album-title">Anterior Composite Restoration</div>
+          <div class="album-desc">Layered nano-hybrid composite · Full aesthetic rehabilitation</div>
+        </div>
+        <div class="album-num">01</div>
+      </div>
+
+      <div class="album-item" onclick="openLightbox('Scaling','Scaling & Polishing — Prophylaxis','Full mouth professional cleaning. Before photo shows heavy supra and subgingival calculus. After shows healthy pink gingiva with tight sulcal depths.')">
+        <div class="album-ph" style="background:linear-gradient(135deg,#3d7e7e,#2b6464)">
+          <svg class="ph-tooth" width="80" height="80" viewBox="0 0 24 24" fill="white"><path d="M12 2C9 2 7 4 7 7c0 2 1 4 1 6s-1 3-1 5c0 1.5.5 4 2 4 1 0 1.5-2 2-4s1-3 2-3 1.5 1 2 3 1 4 2 4c1.5 0 2-2.5 2-4 0-2-1-3-1-5s1-4 1-6c0-3-2-5-5-5z"/></svg>
+        </div>
+        <div class="album-overlay">
+          <div class="album-tag">Prophylaxis · Case 02</div>
+          <div class="album-title">Scaling & Polishing</div>
+          <div class="album-desc">Full mouth debridement · Significant gingival improvement</div>
+        </div>
+        <div class="album-num">02</div>
+      </div>
+
+      <!-- wide card -->
+      <div class="album-item" onclick="openLightbox('Full Arch','Full Arch Treatment Planning','Comprehensive treatment plan developed for a challenging case requiring multi-disciplinary approach. Radiographs, photographs and detailed notes compiled.')">
+        <div class="album-ph" style="background:linear-gradient(135deg,#1e4a4a,#2b6464);aspect-ratio:16/7">
+          <svg class="ph-tooth" width="120" height="80" viewBox="0 0 48 24" fill="white"><path d="M8 2C6 2 4 4 4 7c0 2 1 4 1 6s-1 3-1 4c0 1 .5 3 1.5 3s1-1.5 1.5-3 1-2.5 2-2.5 1.5 1 2 2.5 1 3 2 3 2-2 2-3c0-1-1-2-1-4s1-4 1-6C15 4 13 2 11 2c-1 0-2 .5-3 2-.5-.8-1.2-2-3-2zm20 0c-2 0-4 2-4 5 0 2 1 4 1 6s-1 3-1 4c0 1 .5 3 1.5 3s1-1.5 1.5-3 1-2.5 2-2.5 1.5 1 2 2.5 1 3 2 3 2-2 2-3c0-1-1-2-1-4s1-4 1-6c0-3-2-5-4-5-1 0-2 .5-3 2-.5-.8-1.2-2-3-2z"/></svg>
+        </div>
+        <div class="album-overlay">
+          <div class="album-tag">Treatment Planning · Case 03</div>
+          <div class="album-title">Full Arch Rehabilitation — Multi-Phase Treatment Plan</div>
+          <div class="album-desc">Caries control, periodontal management, and aesthetic restoration planned and sequenced</div>
+        </div>
+        <div class="album-num">03</div>
+      </div>
+
+      <div class="album-item" onclick="openLightbox('Radiology','Periapical X-Ray Diagnosis · Case 04','Periapical radiograph showing periradicular pathology. Accurate radiographic interpretation guided endodontic referral and treatment sequencing.')">
+        <div class="album-ph" style="background:linear-gradient(135deg,#122e2e,#1c4444)">
+          <svg class="ph-tooth" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" opacity="0.15"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <div class="album-overlay">
+          <div class="album-tag">Radiology · Case 04</div>
+          <div class="album-title">Radiographic Diagnosis</div>
+          <div class="album-desc">Periapical assessment · Accurate pathology identification</div>
+        </div>
+        <div class="album-num">04</div>
+      </div>
+
+      <div class="album-item" onclick="openLightbox('Class IV','Class IV Incisal Restoration · Case 05','Post-trauma class IV restoration on upper right central. Freehand composite buildup using putty matrix technique.')">
+        <div class="album-ph" style="background:linear-gradient(135deg,#2b6464,#3d7e7e)">
+          <svg class="ph-tooth" width="80" height="80" viewBox="0 0 24 24" fill="white"><path d="M12 2C9 2 7 4 7 7c0 2 1 4 1 6s-1 3-1 5c0 1.5.5 4 2 4 1 0 1.5-2 2-4s1-3 2-3 1.5 1 2 3 1 4 2 4c1.5 0 2-2.5 2-4 0-2-1-3-1-5s1-4 1-6c0-3-2-5-5-5z"/></svg>
+        </div>
+        <div class="album-overlay">
+          <div class="album-tag">Aesthetic · Case 05</div>
+          <div class="album-title">Class IV Incisal Restoration</div>
+          <div class="album-desc">Post-trauma freehand buildup · Mirror-matched contour</div>
+        </div>
+        <div class="album-num">05</div>
+      </div>
+
+      <div class="album-item" onclick="openLightbox('Add Case','Add Your Case Here','Replace this placeholder with your own clinical photograph and description. Each case card supports a category tag, title, and detailed description.')">
+        <div class="album-ph" style="background:linear-gradient(135deg,#1c4444,#2b6464);border:2px dashed rgba(200,168,107,0.2)">
+          <div style="text-align:center;opacity:.35">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(200,168,107,1)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            <p style="color:rgba(200,168,107,.6);font-size:.7rem;margin-top:.5rem;letter-spacing:.1em;text-transform:uppercase">Add Case</p>
+          </div>
+        </div>
+        <div class="album-overlay">
+          <div class="album-tag">Your Case</div>
+          <div class="album-title">+ Add New Case</div>
+        </div>
+        <div class="album-num">+</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER / CONTACT -->
+<section class="footer-section" id="contact">
+  <div class="container">
+    <div class="footer-inner">
+      <p class="footer-eyebrow">Available for Opportunities</p>
+      <h2 class="footer-name">Dr. Menna Hammad</h2>
+      <p class="footer-sub">General Dentist · BDS · Egypt</p>
+
+      <div class="contact-grid">
+        <a href="tel:+201200410193" class="contact-link">
+          <div class="ci"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.38 19a19.45 19.45 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          +201200410193
+        </a>
+        <a href="mailto:mennahammad.ali@gmail.com" class="contact-link">
+          <div class="ci"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          mennahammad.ali@gmail.com
+        </a>
+        <a href="#" class="contact-link">
+          <div class="ci"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          Egypt
+        </a>
+      </div>
+
+      <div class="footer-line"></div>
+      <p class="footer-copy">© 2025 Dr. Menna Hammad · All rights reserved</p>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="closeLightbox()">×</button>
+  <div class="lb-inner">
+    <div class="lb-img-ph"><p id="lb-ph-text">Case Photo Placeholder</p></div>
+    <div class="lb-title" id="lb-title"></div>
+    <div class="lb-desc" id="lb-desc"></div>
+  </div>
+</div>
+
+<script>
+// ── REVEAL ON SCROLL ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// ── LANGUAGE BAR ANIMATION ──
+const langObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.lang-fill').forEach(bar => {
+        bar.style.width = bar.dataset.width;
+      });
+    }
+  });
+}, { threshold: 0.3 });
+const langSection = document.querySelector('.extras-section');
+if (langSection) langObs.observe(langSection);
+
+// ── CAROUSEL ──
+const track = document.getElementById('carousel');
+const cards = track.querySelectorAll('.case-card');
+const dotsContainer = document.getElementById('dots');
+let current = 0;
+const visible = 3;
+const total = cards.length;
+
+// build dots
+cards.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsContainer.appendChild(d);
+});
+
+function getCardWidth() {
+  return cards[0].offsetWidth + 24; // 24 = gap
+}
+
+function goTo(idx) {
+  const max = total - visible;
+  current = Math.max(0, Math.min(idx, max));
+  track.style.transform = `translateX(-${current * getCardWidth()}px)`;
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+}
+
+document.getElementById('prev-btn').onclick = () => goTo(current - 1);
+document.getElementById('next-btn').onclick = () => goTo(current + 1);
+
+// auto rotate
+setInterval(() => goTo((current + 1) % (total - visible + 1)), 4000);
+
+// ── LIGHTBOX ──
+function openLightbox(ph, title, desc) {
+  document.getElementById('lb-ph-text').textContent = ph + ' — Add Photo Here';
+  document.getElementById('lb-title').textContent = title;
+  document.getElementById('lb-desc').textContent = desc;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+// ── PHOTO UPLOAD (optional) ──
+document.getElementById('photo-ph').addEventListener('click', () => {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const img = document.createElement('img');
+      img.src = ev.target.result;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:3px';
+      const ph = document.getElementById('photo-ph');
+      ph.parentNode.replaceChild(img, ph);
+    };
+    reader.readAsDataURL(file);
+  };
+  input.click();
+});
+</script>
+</body>
+</html>
